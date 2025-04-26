@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { assets } from "../assets/assets";
 import { Link, NavLink } from "react-router-dom";
 import { useAppContext } from "../context/App_context";
-import Login from "./Login";
 
 const Navbar = () => {
-  const { user, setUser, navigate, setShowUserLogin } = useAppContext();
+  const {
+    user,
+    setUser,
+    navigate,
+    setShowUserLogin,
+    searchQuery,
+    setSearchQuery,
+  } = useAppContext();
   const [open, setOpen] = useState(false);
 
   const logout = () => {
     setUser(false);
     navigate("/");
   };
+
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      navigate("/products");
+    }
+  }, [searchQuery]);
   return (
     <nav className=" relative flex items-center justify-between px-6 md:px-16 lg:px-24 xl:px-32 py-4 border-b border-gray-300 bg-white transition-all">
       <Link to="/">
@@ -24,6 +36,9 @@ const Navbar = () => {
 
         <div className="hidden lg:flex items-center text-sm gap-2 border border-gray-300 px-6 rounded-full">
           <input
+            onChange={(e) => {
+              setSearchQuery(e.target.value)
+              console.log(e.target.value)}}
             className="py-1.5 w-full bg-transparent outline-none placeholder-gray-500"
             type="text"
             placeholder="Search products"
@@ -135,9 +150,6 @@ const Navbar = () => {
           </button>
         )}
       </div>
-      {/* <div className="absolute z-50 top-40 left-0 right-0 bottom-0">
-        <Login />
-      </div> */}
     </nav>
   );
 };

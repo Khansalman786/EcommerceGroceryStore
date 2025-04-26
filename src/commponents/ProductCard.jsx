@@ -2,13 +2,18 @@ import React, { useState } from "react";
 import { assets } from "../assets/assets";
 import { useAppContext } from "../context/App_context";
 const ProductCard = ({ product }) => {
-  const { navigate, cartItems, addToCart, updateToCart, removeToCart } =
+  const { navigate, cartItems, addToCart, removeToCart, ProductDetailShow } =
     useAppContext();
-  const [count, setCount] = useState(0);
 
   return (
     product && (
-      <div className="border border-gray-500/20 rounded-md md:px-4 px-3 py-8 bg-white min-w-35  sm:min-w-40 max-w-56 w-full">
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+          ProductDetailShow(product._id);
+        }}
+        className="border border-gray-500/20 rounded-md md:px-4 px-3 py-8 bg-white min-w-35  sm:min-w-40 max-w-56 w-full"
+      >
         <div className="group cursor-pointer flex items-center justify-center px-2">
           <img
             className="group-hover:scale-105 transition max-w-26 md:max-w-36"

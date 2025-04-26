@@ -15,12 +15,13 @@ const MyContextProvider = ({ children }) => {
   const [showUserLogin, setShowUserLogin] = useState(false);
   const [products, setProducts] = useState([]);
   const [cartItems, setCartItems] = useState({});
+  const [searchQuery, setSearchQuery] = useState({});
 
   // Fetch All Products
   const fetchAllProducts = async () => {
     setProducts(dummyProducts);
   };
-  
+
   // Add Products to Cart
   const addToCart = (ItemId) => {
     const cartData = structuredClone(cartItems);
@@ -54,6 +55,15 @@ const MyContextProvider = ({ children }) => {
     toast.success("Remove from Cart");
   };
 
+  // product details
+  const ProductDetailShow = (ItemId) => {
+    console.log(ItemId);
+  };
+
+  useEffect(() => {
+    ProductDetailShow();
+  }, []);
+  
   useEffect(() => {
     fetchAllProducts();
   }, [products]);
@@ -70,6 +80,8 @@ const MyContextProvider = ({ children }) => {
     addToCart,
     removeToCart,
     cartItems,
+    searchQuery,
+    setSearchQuery,
   };
   return <MyContext.Provider value={value}>{children}</MyContext.Provider>;
 };

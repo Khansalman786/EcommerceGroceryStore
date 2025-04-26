@@ -1,44 +1,27 @@
-import React from "react";
-import { assets } from "../assets/assets";
+import React, { useState } from "react";
+import { assets, dummyProducts } from "../assets/assets";
 import ProductCard from "../commponents/ProductCard";
 import { useAppContext } from "../context/App_context";
 
 const ProductDetailPage = () => {
-  const { products } = useAppContext();
-  const product = {
-    name: "Casual Shoes",
-    category: "Sports",
-    price: 100,
-    offerPrice: 80,
-    rating: 4,
-    images: [
-      "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage.png",
-      "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage2.png",
-      "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage3.png",
-      "https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/card/productImage4.png",
-    ],
-    description: [
-      "High-quality material",
-      "Comfortable for everyday use",
-      "Available in different sizes",
-    ],
-  };
-  const [thumbnail, setThumbnail] = React.useState(product.images[0]);
+  // const { product } = useAppContext();
+  const products = dummyProducts[0];
+  const [thumbnail, setThumbnail] = useState(products.image[0]);
 
   return (
-    product && (
+    products && (
       <div className="mt-16">
         <div className="max-w-6xl w-full px-6">
           <p>
             <span>Home</span> /<span> Products</span> /
-            <span> {product.category}</span> /
-            <span className="text-green-400"> {product.name}</span>
+            <span> {products.category}</span> /
+            <span className="text-green-400"> {products.name}</span>
           </p>
 
           <div className="flex flex-col md:flex-row gap-16 mt-4">
             <div className="flex gap-3">
               <div className="flex flex-col gap-3">
-                {product.images.map((image, index) => (
+                {products.image.map((image, index) => (
                   <div
                     key={index}
                     onClick={() => setThumbnail(image)}
@@ -55,27 +38,27 @@ const ProductDetailPage = () => {
             </div>
 
             <div className="text-sm w-full md:w-1/2">
-              <h1 className="text-3xl font-medium">{product.name}</h1>
+              <h1 className="text-3xl font-medium">{products.name}</h1>
 
               <div className="flex items-center gap-0.5 mt-1">
                 {Array(5)
                   .fill("")
                   .map((_, i) =>
-                    product.rating > i ? (
+                    products.rating > i ? (
                       <img src={assets.star_icon} alt="start_icon" />
                     ) : (
                       <img src={assets.star_dull_icon} alt="start_icon" />
                     )
                   )}
-                <p className="text-base ml-2">({product.rating})</p>
+                <p className="text-base ml-2">({products.rating})</p>
               </div>
 
               <div className="mt-6">
                 <p className="text-gray-500/70 line-through">
-                  MRP: ${product.price}
+                  MRP: ${products.price}
                 </p>
                 <p className="text-2xl font-medium">
-                  MRP: ${product.offerPrice}
+                  MRP: ${products.offerPrice}
                 </p>
                 <span className="text-gray-500/70">
                   (inclusive of all taxes)
@@ -84,7 +67,7 @@ const ProductDetailPage = () => {
 
               <p className="text-base font-medium mt-6">About Product</p>
               <ul className="list-disc ml-4 text-gray-500/70">
-                {product.description.map((desc, index) => (
+                {products.description.map((desc, index) => (
                   <li key={index}>{desc}</li>
                 ))}
               </ul>
@@ -108,7 +91,7 @@ const ProductDetailPage = () => {
             <hr className="w-30 text-green-500 h-0.5 rounded-full border-t-3" />
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 md:gap-6 lg:grid-cols-5 mt-6">
-            {products
+            {dummyProducts
               .filter((product) => product.inStock)
               .slice(0, 5)
               .map((product, index) => (

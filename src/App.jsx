@@ -10,6 +10,7 @@ import SideBar from "./page/seller/SideBar";
 import { Toaster } from "react-hot-toast";
 import Login from "./commponents/Login";
 import { useAppContext } from "./context/App_context";
+import ProductCategory from "./page/ProductCategory";
 
 function App() {
   const { showUserLogin } = useAppContext();
@@ -18,13 +19,14 @@ function App() {
     <>
       {!isSellerPath ? <Navbar /> : <SideBar />}
       {showUserLogin && <Login />}
-      <Toaster />;
+      <Toaster />
       <div className={isSellerPath ? "" : "px-6 md:px-16 lg:px-24 xl:px-32"}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<AllProductPage />} />
           <Route path="/product/id" element={<ProductDetailPage />} />
           <Route path="/cart" element={<CartPage />} />
+          <Route path="/product/:category" element={<ProductCategory />} />
         </Routes>
       </div>
       {!isSellerPath && <Footer />}
